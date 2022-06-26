@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 
 const Report = (props) => {
 
-
     const SignupSchema = Yup.object().shape({
         policyNo1: Yup.number()
             .typeError('Please Enter Valid Policy Number')
