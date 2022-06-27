@@ -118,7 +118,7 @@ input[type=file]::file-selector-button {
 
 .problemDesData {
     width: 100%;
-    height: 70px;
+    height: 50px;
     justify-content: center;
     -webkit-appearance: none;
     margin-top: 10px;
@@ -137,6 +137,35 @@ input[type=file]::file-selector-button {
 }
 
 .problemDesData-Input {
+    background-color: transparent;
+    font-size: medium;
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
+}
+
+.phoneNumber {
+    width: 100%;
+    height: 70px;
+    justify-content: center;
+    -webkit-appearance: none;
+    margin-top: 10px;
+}
+
+.phoneNumber-cont {
+    display: flex;
+    -webkit-appearance: none;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: auto;
+    height: 100%;
+    width: 50%;
+}
+
+.phoneNumber-Input {
     background-color: transparent;
     font-size: medium;
     border: none;

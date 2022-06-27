@@ -10,9 +10,8 @@ const User = (props) => {
     { service: 'Battery Replacement', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/car-battery-1614725-1369416.png' },
     { service: 'Other Mechanic Services', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/mechanic-2299525-1929646.png' }]
 
-    const handelService=(service)=>{
-
-        props.history.push('/report')
+    const handelService=(e)=>{
+        props.history.push({ pathname: '/report', state:e })
     }
     
     return (
@@ -20,7 +19,7 @@ const User = (props) => {
             <div className="service-container">
                 {service.map((e, i) => {
                     return (
-                        <div key={i} className='service' onClick={()=>{handelService(e.service)}}>
+                        <div key={i} className='service' onClick={()=>{handelService(e)}}>
                             <img src={e.img} alt={e.service} />
                             <h5>{e.service}</h5>
                         </div>

@@ -4,23 +4,26 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
 
 const Report = (props) => {
+    const report = props.location.state
     const [policyNo, setpolicyNo] = useState('')
-    const [location, setLocation] = useState()
+    const [location, setLocation] = useState('')
     const [image, setImage] = useState('')
     const [description, setDescription] = useState('')
 
-    console.log(location, image,)
 
     const ReportSchema = Yup.object().shape({
         policyNo: Yup.number()
             .typeError('Please Enter Valid Policy Number')
             .required('PolicyNo Required'),
+        phoneNo: Yup.number()
+            .required('PhoneNo required'),
         location: Yup.string()
             .required('Location Required'),
         image: Yup.mixed()
             .required('Image Required'),
         description: Yup.string()
             .required('Description Required')
+
     });
 
     const handleLocation = () => {
@@ -40,16 +43,25 @@ const Report = (props) => {
         setDescription(e.target.value)
     }
 
-    const handelSubmit=(value)=>{
-        
+    const handelSubmit = (value) => {
+        const reportData = {
+            id: Date.now(),
+            service: report.service,
+            policyNo: policyNo,
+            location: [location.split('-').join(',')],
+            image: image,
+            description: description
+        }
+        console.log(reportData)
     }
 
     return (
         <div>
+            <h1>{report.service}</h1>
             <Formik
                 initialValues={{
                     policyNo: policyNo,
-                    location:location,
+                    location: location,
                     image: image,
                     description: description,
                 }}
@@ -71,6 +83,15 @@ const Report = (props) => {
                             <p className="error">{errors.policyNo}</p>
                         ) : null}
 
+
+                        <div className="phoneNumber">
+                            <div className='phoneNumber-cont'>
+                                <Field name="phone" type='text' value={phone} onChange={handelphone} className='phoneNumber-Input' placeholder='Please Enter Your Phone Number' />
+                            </div>
+                        </div>
+                        {errors.description && touched.description ? (
+                            <p className="error">{errors.description}</p>
+                        ) : null}
                         <div className="locationData">
                             <div className='locationData-cont'>
                                 <Field name="location" type='text' className='locationData-Input' disabled={true} placeholder='Click icon to get location' value={location} />
