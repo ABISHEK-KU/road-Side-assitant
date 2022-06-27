@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 const Report = (props) => {
     const report = props.location.state
     const [policyNo, setpolicyNo] = useState('')
+    const [phone, setPhone] = useState('')
     const [location, setLocation] = useState('')
     const [image, setImage] = useState('')
     const [description, setDescription] = useState('')
@@ -14,9 +15,13 @@ const Report = (props) => {
     const ReportSchema = Yup.object().shape({
         policyNo: Yup.number()
             .typeError('Please Enter Valid Policy Number')
-            .required('PolicyNo Required'),
-        phoneNo: Yup.number()
-            .required('PhoneNo required'),
+            .required('PolicyNo Required')
+            .min('Required 17 digit')
+            .max('Required 17 digit'),
+        phone: Yup.number()
+            .required('PhoneNo required')
+            .min('Required 10 digit')
+            .max('Required 10 digit'),
         location: Yup.string()
             .required('Location Required'),
         image: Yup.mixed()
@@ -43,14 +48,19 @@ const Report = (props) => {
         setDescription(e.target.value)
     }
 
+    const handelphone = (e) => {
+        setPhone(e.target.value)
+    }
+
     const handelSubmit = (value) => {
         const reportData = {
             id: Date.now(),
             service: report.service,
-            policyNo: policyNo,
-            location: [location.split('-').join(',')],
-            image: image,
-            description: description
+            phone: value.phone,
+            policyNo: value.policyNo,
+            location: [value.location.split('-').join(',')],
+            image: value.image,
+            description: value.description
         }
         console.log(reportData)
     }
@@ -61,6 +71,7 @@ const Report = (props) => {
             <Formik
                 initialValues={{
                     policyNo: policyNo,
+                    phone: phone,
                     location: location,
                     image: image,
                     description: description,
@@ -75,7 +86,7 @@ const Report = (props) => {
                     <Form>
                         <div className='policyNo'>
                             <div className='policyNo-cont'>
-                                <Field name="policyNo" className='policyNo-Inputs' type='text' value={policyNo} onChange={handelPolicy} maxLength={17} minLength={17} placeholder='Please Enter 17 Digit Policy Number without "/"' />
+                                <Field name="policyNo" className='policyNo-Inputs' type='number' value={policyNo} onChange={handelPolicy} maxLength={17} minLength={17} placeholder='Please Enter 17 Digit Policy Number without "/"' />
                                 <span className="policyNo-count">{17 - policyNo.length}</span>
                             </div>
                         </div>
@@ -83,14 +94,16 @@ const Report = (props) => {
                             <p className="error">{errors.policyNo}</p>
                         ) : null}
 
-
                         <div className="phoneNumber">
                             <div className='phoneNumber-cont'>
-                                <Field name="phone" type='text' value={phone} onChange={handelphone} className='phoneNumber-Input' placeholder='Please Enter Your Phone Number' />
+                                <Field name="phone" type='number' value={phone} onChange={handelphone} className='phoneNumber-Input' maxLength={10} minLength={10} placeholder='Please Enter Your Phone Number' />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-phone-fill" viewBox="0 0 16 16">
+                                    <path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
+                                </svg>
                             </div>
                         </div>
-                        {errors.description && touched.description ? (
-                            <p className="error">{errors.description}</p>
+                        {errors.phone && touched.phone ? (
+                            <p className="error">{errors.phone}</p>
                         ) : null}
                         <div className="locationData">
                             <div className='locationData-cont'>
