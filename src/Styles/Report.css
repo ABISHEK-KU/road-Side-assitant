@@ -1,112 +1,146 @@
-.policyNo{
+.policyNo {
     width: 100%;
-    -webkit-appearance:none;
-    height:50px;
+    height: 50px;
     justify-content: center;
-    font-size:larger;
-}
-.policyNo-cont{
-    display: block;
-    -webkit-appearance:none;
-    justify-content: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: auto;
-    width:50%;
-    height:100%;
-}
-
-.policyNo1-Inputs,
-.policyNo2-Inputs,
-.policyNo3-Inputs,
-.policyNo4-Inputs{
-    background-color: transparent;
-    font-size: medium;
-    border: none;
-    outline: none;
-}
-
-.error{
-    color:rgb(250, 139, 139)
-}
-
-.policyNo1-Inputs{
-    width:15%;
-}
-.policyNo2-Inputs{
-    width:40%
-}
-.policyNo3-Inputs{
-    width:15%
-}
-.policyNo4-Inputs{
-    width: 10%;
-}
-
-.bi-geo-alt-fill,
-.bi-camera-fill{
-    color:dodgerblue;
+    -webkit-appearance: none;
     margin-top: 10px;
 }
 
-.locationData{
-    width: 100%;
-    height:50px;
-    justify-content: center;
-    -webkit-appearance:none;
-
-}
-
-.locationData-cont{
-    display: flex;
-    -webkit-appearance:none;
+.policyNo-cont {
+    display: block;
+    -webkit-appearance: none;
     justify-content: center;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
     margin: auto;
-    height:100%;
-    width:50%;
+    width: 50%;
+    height: 100%;
 }
 
-.locationData-Input{
+.policyNo-Inputs {
     background-color: transparent;
     font-size: medium;
     border: none;
     outline: none;
-    width:90%
+    height: 100%;
+    width: 90%;
 }
 
-.cameraData{
+.error {
+    color: rgb(250, 139, 139)
+}
+
+
+
+.bi-geo-alt-fill,
+.bi-camera-fill {
+    color: dodgerblue;
+    margin-top: 10px;
+}
+
+.locationData {
     width: 100%;
-    height:50px;
+    height: 50px;
     justify-content: center;
-    -webkit-appearance:none;
-
+    -webkit-appearance: none;
+    margin-top: 10px;
 }
 
-.cameraData-cont{
+.locationData-cont {
     display: flex;
-    -webkit-appearance:none;
+    -webkit-appearance: none;
+    justify-content: center;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
     margin: auto;
-    height:100%;
-    width:50%;
+    height: 100%;
+    width: 50%;
 }
 
-.cameraData-Input{
+.locationData-Input {
     background-color: transparent;
     font-size: medium;
     border: none;
     outline: none;
-    width:100%;
-    margin-top:13px;
+    width: 90%
 }
-#file-upload-button{
-    width:100%;
-    color:white;
-    background-color: rgb(42, 81, 255);
+
+.imageData {
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    -webkit-appearance: none;
+    margin-top: 10px;
+}
+
+.imageData-cont {
+    display: flex;
+    -webkit-appearance: none;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: auto;
+    height: 100%;
+    width: 50%;
+}
+
+.imageData-Input {
+    background-color: transparent;
+    font-size: medium;
+    border: none;
+    outline: none;
+    width: 90%;
+    margin-top: 13px;
+}
+
+input[type=file]::file-selector-button {
+    display: none;
+}
+
+.reportbtn {
+    margin-top: 10px;
+    width: 50%;
+    color: white;
+    background-color: rgb(0, 214, 107);
+    border: none;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.policyNo-count {
+    font-size: large;
+}
+
+.problemDesData {
+    width: 100%;
+    height: 70px;
+    justify-content: center;
+    -webkit-appearance: none;
+    margin-top: 10px;
+}
+
+.problemDesData-cont {
+    display: flex;
+    -webkit-appearance: none;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: auto;
+    height: 100%;
+    width: 50%;
+}
+
+.problemDesData-Input {
+    background-color: transparent;
+    font-size: medium;
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
 }
