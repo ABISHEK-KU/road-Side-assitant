@@ -5,29 +5,27 @@ import * as Yup from 'yup';
 
 const Report = (props) => {
     const [policyNo, setpolicyNo] = useState('')
-    const [location, setLocation] = useState([])
+    const [location, setLocation] = useState()
     const [image, setImage] = useState('')
-    const [description,setDescription]=useState('')
+    const [description, setDescription] = useState('')
 
     console.log(location, image,)
 
     const ReportSchema = Yup.object().shape({
         policyNo: Yup.number()
             .typeError('Please Enter Valid Policy Number')
-            .required('PolicyNo Required')
-            .min,
+            .required('PolicyNo Required'),
         location: Yup.string()
-            .required('Required'),
+            .required('Location Required'),
         image: Yup.mixed()
-            .required('Required'),
+            .required('Image Required'),
         description: Yup.string()
-        .required('Required')
+            .required('Description Required')
     });
 
     const handleLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
-            setLocation([position.coords.latitude, position.coords.longitude])
-            console.log(position.coords.latitude, position.coords.longitude)
+            setLocation(`${position.coords.latitude}-${position.coords.longitude}`)
         })
     }
 
@@ -38,22 +36,27 @@ const Report = (props) => {
         setImage(e.target.value)
     }
 
-    const handelDescription=(e)=>{
+    const handelDescription = (e) => {
         setDescription(e.target.value)
+    }
+
+    const handelSubmit=(value)=>{
+        
     }
 
     return (
         <div>
             <Formik
                 initialValues={{
-                    policyNo: '',
-                    location: '',
-                    image: '',
-                    description:''
+                    policyNo: policyNo,
+                    location:location,
+                    image: image,
+                    description: description,
                 }}
                 validationSchema={ReportSchema}
+                enableReinitialize
                 onSubmit={values => {
-                    console.log(values);
+                    handelSubmit(values);
                 }}
             >
                 {({ errors, touched }) => (
@@ -70,7 +73,7 @@ const Report = (props) => {
 
                         <div className="locationData">
                             <div className='locationData-cont'>
-                                <Field name="location" type='text' className='locationData-Input' disabled={true} placeholder='Click icon to get location' value={[...location]} />
+                                <Field name="location" type='text' className='locationData-Input' disabled={true} placeholder='Click icon to get location' value={location} />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-geo-alt-fill" viewBox="0 0 16 16" onClick={handleLocation}>
                                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                                 </svg>
