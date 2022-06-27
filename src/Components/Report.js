@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../Styles/Report.css'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
@@ -10,25 +10,31 @@ const Report = (props) => {
     const [location, setLocation] = useState('')
     const [image, setImage] = useState('')
     const [description, setDescription] = useState('')
+    const [data, setData] = useState([])
 
+    if (localStorage.getItem('ReportData') === null) {
+        localStorage.setItem('ReportData', JSON.stringify([]))
+    }
+
+    useEffect(() => {
+        setData(JSON.parse(localStorage.getItem('ReportData')))
+    }, [JSON.parse(localStorage.getItem('ReportData')).length])
 
     const ReportSchema = Yup.object().shape({
-        policyNo: Yup.number()
-            .typeError('Please Enter Valid Policy Number')
+        policyNo: Yup.string()
             .required('PolicyNo Required')
-            .min('Required 17 digit')
-            .max('Required 17 digit'),
-        phone: Yup.number()
+            .min(17, 'Required 17 digit')
+            .max(17, 'Required 17 digit'),
+        phone: Yup.string()
             .required('PhoneNo required')
-            .min('Required 10 digit')
-            .max('Required 10 digit'),
+            .min(10, 'Required 10 digit')
+            .max(10, 'Required 10 digit'),
         location: Yup.string()
             .required('Location Required'),
         image: Yup.mixed()
             .required('Image Required'),
         description: Yup.string()
             .required('Description Required')
-
     });
 
     const handleLocation = () => {
@@ -54,15 +60,24 @@ const Report = (props) => {
 
     const handelSubmit = (value) => {
         const reportData = {
-            id: Date.now(),
+            serviceId: Date.now(),
             service: report.service,
             phone: value.phone,
             policyNo: value.policyNo,
             location: [value.location.split('-').join(',')],
             image: value.image,
-            description: value.description
+            description: value.description,
+            status:'services Requested'
         }
         console.log(reportData)
+
+        localStorage.setItem('ReportData', JSON.stringify([...data, reportData]))
+
+        setpolicyNo('')
+        setPhone('')
+        setLocation('')
+        setImage('')
+        setDescription('')
     }
 
     return (
@@ -76,6 +91,8 @@ const Report = (props) => {
                     image: image,
                     description: description,
                 }}
+                validateOnChange={false}
+                validateOnBlur={false}
                 validationSchema={ReportSchema}
                 enableReinitialize
                 onSubmit={values => {
@@ -86,7 +103,7 @@ const Report = (props) => {
                     <Form>
                         <div className='policyNo'>
                             <div className='policyNo-cont'>
-                                <Field name="policyNo" className='policyNo-Inputs' type='number' value={policyNo} onChange={handelPolicy} maxLength={17} minLength={17} placeholder='Please Enter 17 Digit Policy Number without "/"' />
+                                <Field name="policyNo" className='policyNo-Inputs' type='number' value={policyNo} onChange={handelPolicy} placeholder='Please Enter 17 Digit Policy Number without "/"' />
                                 <span className="policyNo-count">{17 - policyNo.length}</span>
                             </div>
                         </div>
@@ -96,7 +113,7 @@ const Report = (props) => {
 
                         <div className="phoneNumber">
                             <div className='phoneNumber-cont'>
-                                <Field name="phone" type='number' value={phone} onChange={handelphone} className='phoneNumber-Input' maxLength={10} minLength={10} placeholder='Please Enter Your Phone Number' />
+                                <Field name="phone" type='number' value={phone} onChange={handelphone} className='phoneNumber-Input' placeholder='Please Enter Your Phone Number' />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-phone-fill" viewBox="0 0 16 16">
                                     <path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
                                 </svg>
