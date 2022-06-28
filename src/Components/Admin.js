@@ -6,6 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 const Admin = (props) => {
     const [data, setData] = useState([])
     const [service, setService] = useState('')
+    const [status,setStatus]=useState('')
     const serviceList = [{ service: 'Accident', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/accident-1642856-1393941.png' },
     { service: 'Towing', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/towing-car-1614699-1369388.png' },
     { service: 'Fuel Delivery', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/fuel-49-189422.png' },
@@ -21,7 +22,8 @@ const Admin = (props) => {
 
     const filterData = data.filter((e) => {
         return e.service.includes(service)
-    })
+    }).reverse()
+
     console.log(filterData)
 
     const handelChange = (e) => {
@@ -29,13 +31,28 @@ const Admin = (props) => {
     }
 
     const handelImage = (src) => {
-
+        props.history.push({ pathname: '/image', state: src })
     }
 
     const handelLocate = (location) => {
-        props.history.push({ pathname:'/location', state:location })
+        props.history.push({ pathname: '/location', state: location })
     }
 
+    const handelStatus=(e)=>{
+        setStatus(e.target.value)
+    }
+
+    const handelUpdateStaus=(e)=>{
+        const updatedData=data.map((ele)=>{
+            if(ele.serviceId===e.serviceId){
+                return {...ele,status:status}
+            }else{
+                return ele
+            }
+        })
+        localStorage.setItem('ReportData', JSON.stringify(updatedData))
+        setStatus('')
+    }
     return (
         <div>
             <select onChange={handelChange}>
@@ -53,8 +70,9 @@ const Admin = (props) => {
                             <th scope="col">Policy No</th>
                             <th scope="col">Customer Name</th>
                             <th scope="col">Phone</th>
-                            <th scope="col">Locate</th>
+                            <th scope="col">Service Status</th>
                             <th scope="col">Service</th>
+                            <th scope="col">Locate</th>
                             <th scope="col">View Photo</th>
                         </tr>
                     </thead>
@@ -68,6 +86,16 @@ const Admin = (props) => {
                                     <td>{e.policyNo}</td>
                                     <td>{e.policyHolderName}</td>
                                     <td>{e.phone}</td>
+                                    <td>
+                                        <div className="input-group mb-3">
+                                            <select className="form-select" aria-label="Default select example" defaultValue={e.status} onChange={handelStatus}>
+                                                <option value=''>SELECT OPTION</option>
+                                                <option value="services Requested">Requested</option>
+                                                <option value="SendTeam">Send Team</option>
+                                                <option value="Completed">service Completed</option>
+                                            </select>
+                                            <button className="btn btn-outline-secondary" type="button" id="button-addon1"onClick={()=>{handelUpdateStaus(e)}}>Update</button>
+                                        </div></td>
                                     <td>{e.service}</td>
                                     <td><button className="btn btn-success" onClick={() => { handelLocate(e.location) }}>Locate</button></td>
                                     <td><button className="btn btn-warning" onClick={() => { handelImage(e.image) }}>View Image</button></td>

@@ -6,6 +6,7 @@ import NavBar from './Components/Navbar';
 import Admin from './Components/Admin';
 import Report from './Components/Report';
 import Location from './Components/Location';
+import Image from './Components/Image';
 
 const App = (props) => {
 
@@ -93,6 +94,7 @@ const App = (props) => {
       <Route path='/admin' component={Admin} exact={true} />
       <Route path='/report' component={Report} exact={true} />
       <Route path='/location' component={Location} exact={true}/>
+      <Route path='/image' component={Image} exact={true}/>
     </div>
   );
 }
