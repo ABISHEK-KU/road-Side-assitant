@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import '../Styles/Report.css'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
+import swal from "sweetalert";
 
 const Report = (props) => {
     const report = props.location.state
@@ -11,6 +12,10 @@ const Report = (props) => {
     const [image, setImage] = useState('')
     const [description, setDescription] = useState('')
     const [data, setData] = useState([])
+    const [policyData, setPolicyData] = useState([])
+    const [policyDetails, setPolicyDetails] = useState({})
+
+    console.log(policyDetails)
 
     if (localStorage.getItem('ReportData') === null) {
         localStorage.setItem('ReportData', JSON.stringify([]))
@@ -18,7 +23,27 @@ const Report = (props) => {
 
     useEffect(() => {
         setData(JSON.parse(localStorage.getItem('ReportData')))
+        setPolicyData(JSON.parse(localStorage.getItem('policyDetails')))
     }, [JSON.parse(localStorage.getItem('ReportData')).length])
+
+    useEffect(()=>{
+        if (policyNo.length === 17) {
+            const formData = `${policyNo.slice(0, 4)}/${policyNo.slice(4, 12)}/${policyNo.slice(12, 15)}/${policyNo.slice(15, 17)}`
+            const policyValid =policyData.length>0 && policyData && policyData.filter((e) => {
+                return e.policyNo === formData
+            })
+            if (policyValid.length === 0) {
+                swal({
+                    title: 'Alert',
+                    text: "Please Enter Valid Policy Number",
+                    icon: "error",
+                    dangerMode: true,
+                })
+            } else {
+                setPolicyDetails(...policyValid)
+            }
+        }
+    },[policyNo.length])
 
     const ReportSchema = Yup.object().shape({
         policyNo: Yup.string()
@@ -43,10 +68,12 @@ const Report = (props) => {
         })
     }
 
+
     const handelPolicy = (e) => {
         setpolicyNo(e.target.value)
     }
     const handelImage = (e) => {
+        console.log(e.target)
         setImage(e.target.value)
     }
 
@@ -63,15 +90,20 @@ const Report = (props) => {
             serviceId: Date.now(),
             service: report.service,
             phone: value.phone,
-            policyNo: value.policyNo,
+            policyNo: `${value.policyNo.slice(0, 4)}/${value.policyNo.slice(4, 12)}/${value.policyNo.slice(12, 15)}/${value.policyNo.slice(15, 17)}`,
             location: [value.location.split('-').join(',')],
             image: value.image,
             description: value.description,
-            status:'services Requested'
+            status: 'services Requested',
         }
-        console.log(reportData)
 
-        localStorage.setItem('ReportData', JSON.stringify([...data, reportData]))
+        swal({
+            title:"Successfully reported",
+            text: `Your Report Id ${reportData.serviceId}`,
+            icon: "success",
+          });
+
+        localStorage.setItem('ReportData', JSON.stringify([...data,{...reportData,...policyDetails}]))
 
         setpolicyNo('')
         setPhone('')

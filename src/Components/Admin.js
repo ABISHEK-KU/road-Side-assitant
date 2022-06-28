@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import '../Styles/Admin.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 const Admin = (props) => {
     const [data, setData] = useState([])
     const [service, setService] = useState('')
-    const [policyDetails,setpolicyDetails]=useState([])
-    const [serviceDetails,setServiceDetails]=useState([])
     const serviceList = [{ service: 'Accident', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/accident-1642856-1393941.png' },
     { service: 'Towing', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/towing-car-1614699-1369388.png' },
     { service: 'Fuel Delivery', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/fuel-49-189422.png' },
@@ -16,14 +16,9 @@ const Admin = (props) => {
 
     useEffect(() => {
         setData(JSON.parse(localStorage.getItem('ReportData')))
-        setpolicyDetails(JSON.parse(localStorage.getItem('policyDetails')))
     }, [JSON.parse(localStorage.getItem('ReportData')).length])
 
-    const policyDataSeparator=()=>{
-        policyDetails.map((e)=>{
-            return 
-        })
-    }
+
     const filterData = data.filter((e) => {
         return e.service.includes(service)
     })
@@ -31,6 +26,7 @@ const Admin = (props) => {
     const handelChange = (e) => {
         setService(e.target.value)
     }
+
     return (
         <div>
             <select onChange={handelChange}>
@@ -40,20 +36,37 @@ const Admin = (props) => {
                 })}
             </select>
             <div>
-                <table>
-                    <tr>
-                        <th>S.No</th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>PolicyNo</th>
-                        <th>ServiceFor</th>
-                    </tr>
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">ServiceId</th>
+                            <th scope="col">Policy No</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Locate</th>
+                            <th scope="col">Service</th>
+                            <th scope="col">View Photo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {filterData.map((e,i) => {
+                            return (
+                                <tr>
+                                    <th scope="row">{i+1}</th>
+                                    <td>{e.serviceId}</td>
+                                    <td>{e.policyNo}</td>
+                                    <td>{e.policyHolderName}</td>
+                                    <td>{e.phone}</td>
+                                    <td><button onClick={()=>{handelLocate(e.locate)}}>Locate</button></td>
+                                    <td>{e.service}</td>
+                                    <td><button onClick={()=>{handelImage(e.image)}}>View Image</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
                 </table>
-                {filterData.map((e, i) => {
-                    return (
-                        <h1>data</h1>
-                    )
-                })}
             </div>
         </div>
     )
