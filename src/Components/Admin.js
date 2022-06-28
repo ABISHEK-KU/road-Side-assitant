@@ -22,9 +22,18 @@ const Admin = (props) => {
     const filterData = data.filter((e) => {
         return e.service.includes(service)
     })
+    console.log(filterData)
 
     const handelChange = (e) => {
         setService(e.target.value)
+    }
+
+    const handelImage = (src) => {
+
+    }
+
+    const handelLocate = (location) => {
+        props.history.push({ pathname:'/location', state:location })
     }
 
     return (
@@ -51,17 +60,17 @@ const Admin = (props) => {
                     </thead>
                     <tbody>
 
-                        {filterData.map((e,i) => {
+                        {filterData.map((e, i) => {
                             return (
-                                <tr>
-                                    <th scope="row">{i+1}</th>
+                                <tr key={i}>
+                                    <th scope="row">{i + 1}</th>
                                     <td>{e.serviceId}</td>
                                     <td>{e.policyNo}</td>
                                     <td>{e.policyHolderName}</td>
                                     <td>{e.phone}</td>
-                                    <td><button onClick={()=>{handelLocate(e.locate)}}>Locate</button></td>
                                     <td>{e.service}</td>
-                                    <td><button onClick={()=>{handelImage(e.image)}}>View Image</button></td>
+                                    <td><button className="btn btn-success" onClick={() => { handelLocate(e.location) }}>Locate</button></td>
+                                    <td><button className="btn btn-warning" onClick={() => { handelImage(e.image) }}>View Image</button></td>
                                 </tr>
                             )
                         })}

@@ -43,7 +43,7 @@ const Report = (props) => {
                 setPolicyDetails(...policyValid)
             }
         }
-    },[policyNo.length])
+    },[policyNo.length,policyData.length])
 
     const ReportSchema = Yup.object().shape({
         policyNo: Yup.string()
@@ -73,7 +73,7 @@ const Report = (props) => {
         setpolicyNo(e.target.value)
     }
     const handelImage = (e) => {
-        console.log(e.target)
+        console.log((e.target.value).replace(/^.*\\/,""))
         setImage(e.target.value)
     }
 
@@ -114,7 +114,7 @@ const Report = (props) => {
 
     return (
         <div>
-            <h1>{report.service}</h1>
+            <h1>{report.service && report.service}</h1>
             <Formik
                 initialValues={{
                     policyNo: policyNo,
@@ -190,7 +190,6 @@ const Report = (props) => {
                         {errors.description && touched.description ? (
                             <p className="error">{errors.description}</p>
                         ) : null}
-
 
                         <button type="submit" className='reportbtn'><h3>Report</h3></button>
                     </Form>

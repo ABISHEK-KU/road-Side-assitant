@@ -5,6 +5,7 @@ import User from './Components/User';
 import NavBar from './Components/Navbar';
 import Admin from './Components/Admin';
 import Report from './Components/Report';
+import Location from './Components/Location';
 
 const App = (props) => {
 
@@ -91,6 +92,7 @@ const App = (props) => {
       <Route path='/user' component={User} exact={true} />
       <Route path='/admin' component={Admin} exact={true} />
       <Route path='/report' component={Report} exact={true} />
+      <Route path='/location' component={Location} exact={true}/>
     </div>
   );
 }
