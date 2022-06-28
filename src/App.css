@@ -2,8 +2,9 @@
   text-align: center;
 }
 
-.heading{
-  color:rgb(252, 255, 101);
-  background-color:dodgerblue;
+.heading {
+  color:white;
+  font-family:cursive;
+  background-color: dodgerblue;
+  margin-top:10px;
 }
-

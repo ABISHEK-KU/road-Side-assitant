@@ -10,16 +10,17 @@ const User = (props) => {
     { service: 'Battery Replacement', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/car-battery-1614725-1369416.png' },
     { service: 'Other Mechanic Services', img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/mechanic-2299525-1929646.png' }]
 
-    const handelService=(e)=>{
-        props.history.push({ pathname: '/report', state:e })
+    const handelService = (e) => {
+        props.history.push({ pathname: '/report', state: e })
     }
-    
+
     return (
         <div>
+            <button className="btn btn-warning" onClick={() => { props.history.push('/status') }}>Track Service</button>
             <div className="service-container">
                 {service.map((e, i) => {
                     return (
-                        <div key={i} className='service' onClick={()=>{handelService(e)}}>
+                        <div key={i} className='service' onClick={() => { handelService(e) }}>
                             <img src={e.img} alt={e.service} />
                             <h5>{e.service}</h5>
                         </div>

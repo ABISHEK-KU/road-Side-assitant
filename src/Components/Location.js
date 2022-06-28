@@ -7,7 +7,7 @@ const Location = (props) => {
     console.log(location)
     return (
         <div>
-            <button className="btn btn-danger" onClick={()=>{props.history.push('/admin')}}>Back</button>
+            <button className="btn btn-danger" onClick={() => { props.history.push('/admin') }}>Back</button>
             <div className="ratio ratio-16x9">
                 <iframe title='trackmap' allowfFullScreen src={`https://maps.google.com/maps?q=${location[0]}&output=svembed`} />
             </div>

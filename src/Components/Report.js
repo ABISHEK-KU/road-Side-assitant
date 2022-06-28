@@ -26,10 +26,10 @@ const Report = (props) => {
         setPolicyData(JSON.parse(localStorage.getItem('policyDetails')))
     }, [JSON.parse(localStorage.getItem('ReportData')).length])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (policyNo.length === 17) {
             const formData = `${policyNo.slice(0, 4)}/${policyNo.slice(4, 12)}/${policyNo.slice(12, 15)}/${policyNo.slice(15, 17)}`
-            const policyValid =policyData.length>0 && policyData && policyData.filter((e) => {
+            const policyValid = policyData.length > 0 && policyData && policyData.filter((e) => {
                 return e.policyNo === formData
             })
             if (policyValid.length === 0) {
@@ -43,7 +43,7 @@ const Report = (props) => {
                 setPolicyDetails(...policyValid)
             }
         }
-    },[policyNo.length,policyData.length])
+    }, [policyNo.length, policyData.length])
 
     const ReportSchema = Yup.object().shape({
         policyNo: Yup.string()
@@ -73,7 +73,7 @@ const Report = (props) => {
         setpolicyNo(e.target.value)
     }
     const handelImage = (e) => {
-        console.log((e.target.value).replace(/^.*\\/,""))
+        console.log((e.target.value).replace(/^.*\\/, ""))
         setImage(e.target.value)
     }
 
@@ -94,16 +94,16 @@ const Report = (props) => {
             location: [value.location.split('-').join(',')],
             image: value.image,
             description: value.description,
-            status: 'services Requested',
+            status: 'Services Requested',
         }
 
         swal({
-            title:"Successfully reported",
+            title: "Successfully reported",
             text: `Your Report Id ${reportData.serviceId}`,
             icon: "success",
-          });
+        });
 
-        localStorage.setItem('ReportData', JSON.stringify([...data,{...reportData,...policyDetails}]))
+        localStorage.setItem('ReportData', JSON.stringify([...data, { ...reportData, ...policyDetails }]))
 
         setpolicyNo('')
         setPhone('')
